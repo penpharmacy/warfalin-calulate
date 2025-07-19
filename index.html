@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>Warfarin Dose Adjustment</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f4f6f7;
+      padding: 20px;
+    }
+    .container {
+      background: white;
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+    label, select, input, button {
+      display: block;
+      margin: 10px 0;
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #2e86de;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #result {
+      background: #eafaf1;
+      border-left: 5px solid #27ae60;
+      padding: 15px;
+      margin-top: 20px;
+    }
+    table {
+      width: 100%;
+      margin-top: 10px;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 6px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Warfarin Dose Adjustment</h2>
+
+    <label for="inr">ค่า INR:</label>
+    <input type="number" id="inr" step="0.1">
+
+    <label for="bleeding">มีเลือดออกหรือไม่:</label>
+    <select id="bleeding">
+      <option value="no">ไม่มี</option>
+      <option value="yes">มี</option>
+    </select>
+
+    <label for="avgDose">ขนาดยาเฉลี่ยก่อนหน้า (mg/วัน):</label>
+    <input type="number" id="avgDose" step="0.1">
+
+    <button onclick="adjustDose()">คำนวณ</button>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function calculateTabletCount(dose) {
+      const options = [];
+      for (let i = 0; i <= 5; i++) {
+        for (let j = 0; j <= 5; j++) {
+          const total = i * 3 + j * 5;
+          const diff = Math.abs(total - dose) / dose * 100;
+          if (total > 0 && diff <= 50) {
+            options.push({ total, tabs3: i, tabs5: j, diff });
+          }
+        }
+      }
+      options.sort((a, b) => a.diff - b.diff);
+      return options[0] || null;
+    }
+
+    function getAdjustment(inr, bleeding) {
+      if (bleeding === "yes") {
+        return { percent: 0, text: "ให้ Vitamin K₁ 10 mg IV + FFP และ repeat ทุก 12 ชม. ถ้าจำเป็น", override: true };
+      }
+      if (inr < 1.5) return { percent: 0.15, text: "เพิ่มขนาดยา 10–20%" };
+      if (inr < 2.0) return { percent: 0.075, text: "เพิ่มขนาดยา 5–10%" };
+      if (inr <= 3.0) return { percent: 0, text: "ให้ขนาดยาเท่าเดิม" };
+      if (inr <= 3.9) return { percent: -0.075, text: "ลดขนาดยา 5–10%" };
+      if (inr <= 4.9) return { percent: -0.10, text: "หยุดยา 1 วัน แล้วลดขนาดยา 10%" };
+      if (inr <= 8.9) return { percent: 0, text: "หยุดยา 1–2 วัน และให้ Vitamin K₁ 1 mg oral", override: true };
+      return { percent: 0, text: "ให้ Vitamin K₁ 5–10 mg oral", override: true };
+    }
+
+    function adjustDose() {
+      const inr = parseFloat(document.getElementById("inr").value);
+      const bleeding = document.getElementById("bleeding").value;
+      const avgDose = parseFloat(document.getElementById("avgDose").value);
+
+      if (isNaN(inr) || isNaN(avgDose)) {
+        alert("กรุณากรอก INR และขนาดยาเฉลี่ย");
+        return;
+      }
+
+      const adj = getAdjustment(inr, bleeding);
+      const resultDiv = document.getElementById("result");
+
+      if (adj.override) {
+        resultDiv.innerHTML = `<strong>คำแนะนำ:</strong> ${adj.text}`;
+        return;
+      }
+
+      const newDose = avgDose * (1 + adj.percent);
+      const dayNames = ["จันทร์", "อังคาร", "พุธ", "พฤหัส", "ศุกร์", "เสาร์", "อาทิตย์"];
+      let tableHTML = `
+        <strong>คำแนะนำ:</strong> ${adj.text}<br>
+        <strong>ขนาดยาเฉลี่ยใหม่:</strong> ${newDose.toFixed(2)} mg/วัน
+        <table>
+          <tr>
+            <th>วัน</th>
+            <th>ขนาดยา (mg)</th>
+            <th>3 mg</th>
+            <th>5 mg</th>
+          </tr>
+      `;
+
+      for (let i = 0; i < 7; i++) {
+        const dose = newDose;
+        const tablet = calculateTabletCount(dose);
+        if (tablet) {
+          tableHTML += `
+            <tr>
+              <td>${dayNames[i]}</td>
+              <td>${tablet.total} mg</td>
+              <td>${tablet.tabs3}</td>
+              <td>${tablet.tabs5}</td>
+            </tr>
+          `;
+        } else {
+          tableHTML += `
+            <tr>
+              <td>${dayNames[i]}</td>
+              <td colspan="3">ไม่สามารถปัดขนาดยาได้ในช่วง ±50%</td>
+            </tr>
+          `;
+        }
+      }
+
+      tableHTML += `</table>`;
+      resultDiv.innerHTML = tableHTML;
+    }
+  </script>
+</body>
+</html>

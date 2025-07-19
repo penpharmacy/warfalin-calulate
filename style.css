@@ -1,0 +1,24 @@
+
+body {
+  font-family: sans-serif;
+  padding: 20px;
+  background-color: #fff0f5;
+}
+h1 {
+  color: #e91e63;
+}
+.circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 2px;
+}
+.w3 { background-color: #2196f3; }
+.w5 { background-color: #e91e63; }
+.w3half {
+  background: linear-gradient(to right, #2196f3 50%, white 50%);
+}
+.w5half {
+  background: linear-gradient(to right, #e91e63 50%, white 50%);
+}
