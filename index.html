@@ -591,8 +591,8 @@
         cursor: pointer;
     }
     .tab4-pill {
-        width: 18px;
-        height: 18px;
+        width: 24px;
+        height: 24px;
         border-radius: 50%;
         display: inline-block;
         margin: 0 2px;
@@ -1000,21 +1000,26 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- ⚡ แท็บที่ 4: กระจายขนาดยาอัตโนมัติ (คำนวณ 1 - 5 mg) -->
+    <!-- ⚡ แท็บที่ 4: กระจายขนาดยาอัตโนมัติ (คำนวณ 2 - 3 mg) -->
     <!-- ========================================== -->
     <div id="tab-quick" class="tab-content">
         <section class="card" style="border-top: 4px solid var(--accent);">
-            <h3 style="color:var(--accent); margin-top:0;">⚡ Warfarin คิดแป๊ปเดียว ! (คำนวณและกระจายขนาดยารายสัปดาห์ 1 - 5 mg)</h3>
+            <h3 style="color:var(--accent); margin-top:0;">⚡ Warfarin คิดแป๊ปเดียว ! (คำนวณและกระจายขนาดยารายสัปดาห์ 2 - 3 mg)</h3>
             <p class="small" style="margin-bottom:15px; color:#5A6A70;">ระบบคำนวณจัดแจงยาและกระจายขนาดยาแบบรวดเร็วและชาญฉลาด คลีนภาพ Canva ออกแล้วเพื่อความคล่องตัว</p>
             
             <div class="row">
                 <div class="col">
-                    <label for="tab4PreviousDose" style="font-weight: bold;">ขนาดยาก่อนหน้า (mg/สัปดาห์)</label>
+                    <label for="tab4PreviousDose" style="font-weight: bold;">ขนาดยาก่อนหน้า (mg/week)</label>
                     <input type="number" id="tab4PreviousDose" step="0.1" min="0">
                 </div>
                 <div class="col">
-                    <label for="tab4WeeklyDose" style="font-weight: bold; color: #E67E22;">ขนาดยาใหม่ (mg/สัปดาห์)</label>
+                    <label for="tab4WeeklyDose" style="font-weight: bold; color: #E67E22;">ขนาดยาใหม่ (mg/week)</label>
                     <input type="number" id="tab4WeeklyDose" style="background-color: #FFF3E0; border-color: #FFB74D;" step="0.1" min="0">
+                </div>
+                <!-- แก้ไข: ช่องกรอกจำนวนวันนัดเมื่อเปิดเวปแอปมาเป็นค่าว่าง และไม่มีข้อความใดๆ (ไม่มี placeholder) -->
+                <div class="col">
+                    <label for="tab4Days" style="font-weight: bold; color: #00A896;">จำนวนวันนัด (วัน)</label>
+                    <input type="number" id="tab4Days" value="" min="1" step="1" style="background-color: #E0F2F1; border-color: #B2DFDB;" placeholder="">
                 </div>
                 <div class="col" style="padding-bottom: 12px; display: flex; align-items: center;">
                     <label style="cursor: pointer; font-weight: bold; display: flex; align-items: center; margin: 0; user-select: none;">
@@ -1027,14 +1032,10 @@
             <!-- แผงปุ่มสำหรับปรับเปอร์เซ็นต์อัตโนมัติ -->
             <div id="tab4AdjustmentTable" style="margin-top: 15px;"></div>
 
-            <!-- ส่วนการเลือกขนาดยาที่ใช้คำนวณ -->
+            <!-- ส่วนการเลือกขนาดยาที่ใช้คำนวณ (บังคับเลือกเฉพาะ 2 และ 3 mg) -->
             <div style="margin-top: 20px; padding: 15px; background: #F9F9F9; border-radius: 12px; border: 1px solid #eee;">
-                <label style="font-weight: bold; text-align: center; display: block; margin-bottom: 8px;">เลือกขนาดยาที่มีในคลังเพื่อนำมาคำนวณผสม</label>
+                <label style="font-weight: bold; text-align: center; display: block; margin-bottom: 8px;">เลือกขนาดยาที่ใช้คำนวณ</label>
                 <div class="radio-row" style="justify-content: center; gap: 15px;">
-                    <label class="tab4-checkbox-label">
-                        <input type="checkbox" id="tab4-pill-1" value="1" class="tab4-pill-checkbox">
-                        <span class="tab4-pill tab4-pill-1"></span> 1 mg
-                    </label>
                     <label class="tab4-checkbox-label">
                         <input type="checkbox" id="tab4-pill-2" value="2" class="tab4-pill-checkbox" checked>
                         <span class="tab4-pill tab4-pill-2"></span> 2 mg
@@ -1043,25 +1044,6 @@
                         <input type="checkbox" id="tab4-pill-3" value="3" class="tab4-pill-checkbox" checked>
                         <span class="tab4-pill tab4-pill-3"></span> 3 mg
                     </label>
-                    <label class="tab4-checkbox-label">
-                        <input type="checkbox" id="tab4-pill-5" value="5" class="tab4-pill-checkbox" checked>
-                        <span class="tab4-pill tab4-pill-5"></span> 5 mg
-                    </label>
-                </div>
-            </div>
-
-            <!-- ส่วนกำหนดรูปแบบวันพิเศษ/วันหยุด -->
-            <div style="margin-top: 16px; padding: 15px; background: #F9F9F9; border-radius: 12px; border: 1px solid #eee;">
-                <label style="font-weight: bold; text-align: center; display: block; margin-bottom: 6px;">รูปแบบกรณีมีการสลับวันหรือหยุดยา</label>
-                <div class="radio-row" style="justify-content: center; gap: 20px;">
-                    <label style="cursor: pointer; font-size: 14.5px; display: inline-flex; align-items: center; gap: 4px;">
-                        <input type="radio" id="tab4PatternFriSun" name="tab4SpecialDayPattern" value="fri-sun" checked style="accent-color: var(--accent);">
-                        ศุกร์/เสาร์/อาทิตย์ (ค่าเริ่มต้น)
-                    </label>
-                    <label style="cursor: pointer; font-size: 14.5px; display: inline-flex; align-items: center; gap: 4px;">
-                        <input type="radio" id="tab4PatternMonWedFri" name="tab4SpecialDayPattern" value="mon-wed-fri" style="accent-color: var(--accent);">
-                        กระจายขนาดยา (จันทร์/พุธ/ศุกร์)
-                    </label>
                 </div>
             </div>
 
@@ -1069,16 +1051,17 @@
             <div style="margin-top: 20px; padding: 15px; background: #E0F2F1; border-radius: 12px; border: 1.5px solid #B2DFDB;">
                 <label style="font-weight: bold; display: flex; align-items: center; gap: 8px; justify-content: center; margin-bottom: 0; cursor: pointer; user-select: none;">
                     <input type="checkbox" id="tab4AppointmentToggle" style="transform: scale(1.2); cursor: pointer; accent-color: #00796B;">
-                    คำนวณจำนวนเม็ดยาจัดจ่ายจริงตามปฏิทินวันนัดผู้ป่วย
+                    คำนวณยาด้วยช่วงวันปฏิทิน (ทางเลือกเพิ่มเติม)
                 </label>
+                <p class="small" style="text-align: center; margin: 4px 0 0 0;">*หากเปิดใช้งาน จะดึงคำนวณวันนัดตามวันที่ปฏิทินด้านล่างแทนจำนวนวันนัดด้านบน</p>
                 <div id="tab4AppointmentFields" style="display: none; margin-top: 12px;">
                     <div class="row">
                         <div class="col">
-                            <label>วันที่เริ่มต้นรับยา (วันนี้):</label>
+                            <label>วันที่เริ่มต้น (วันที่มา):</label>
                             <input type="date" id="tab4StartDate">
                         </div>
                         <div class="col">
-                            <label>วันนัดตรวจครั้งถัดไป:</label>
+                            <label>วันนัดครั้งถัดไป:</label>
                             <input type="date" id="tab4EndDate">
                         </div>
                     </div>
@@ -1086,24 +1069,23 @@
                 </div>
             </div>
 
-            <!-- การเลือกจัดเรียงหัวหน้าจอ และโหมดแสดงผลแบบตัวเลขหรือรูปเม็ดยา -->
+            <!-- การเลือกโหมดแสดงผล (เริ่มจากวันจันทร์เสมอ ถอดแถวเริ่มวันออก) -->
             <div style="margin-top: 16px; display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
                 <div>
-                    <label style="font-weight: bold; font-size: 13px; color: var(--muted); margin-right: 10px; display: inline-block;">การจัดปฏิทินหน้าจอ:</label>
-                    <label style="margin-right: 12px; cursor: pointer;"><input type="radio" id="tab4DisplaySunSat" name="tab4DisplayOrder" value="sun-sat" checked style="accent-color: var(--accent);"> อาทิตย์ - เสาร์</label>
-                    <label style="cursor: pointer;"><input type="radio" id="tab4DisplayMonSun" name="tab4DisplayOrder" value="mon-sun" style="accent-color: var(--accent);"> จันทร์ - อาทิตย์</label>
-                </div>
-                <div>
                     <label style="font-weight: bold; font-size: 13px; color: var(--muted); margin-right: 10px; display: inline-block;">โหมดแสดงผล:</label>
-                    <label style="margin-right: 12px; cursor: pointer;"><input type="radio" name="tab4DisplayMode" value="number" checked style="accent-color: var(--accent);"> แสดงเป็นตัวเลข</label>
-                    <label style="cursor: pointer;"><input type="radio" name="tab4DisplayMode" value="image" style="accent-color: var(--accent);"> แสดงเป็นรูปเม็ดยา</label>
+                    <label style="margin-right: 12px; cursor: pointer;"><input type="radio" name="tab4DisplayMode" value="number" style="accent-color: var(--accent);"> แสดงเป็นตัวเลข</label>
+                    <label style="cursor: pointer;"><input type="radio" name="tab4DisplayMode" value="image" checked style="accent-color: var(--accent);"> แสดงเป็นรูปเม็ดยา</label>
                 </div>
             </div>
 
-            <!-- ปุ่มคำนวณกระจายยา และปุ่มล้างข้อมูลในแท็บ 4 -->
-            <div style="text-align: center; margin-top: 20px; display: flex; justify-content: center; gap: 10px;">
-                <button type="button" id="tab4ClearBtn" class="clear-btn" style="padding: 12px 30px; font-size: 16px;">ล้างข้อมูล</button>
-                <button type="button" id="tab4ShowBtn" class="primary" style="padding: 12px 30px; font-size: 16px; background: #00796B;">⚡ ประมวลผลกระจายยาอัตโนมัติ</button>
+            <!-- ปุ่มคำนวณกระจายยา และปุ่มล้างข้อมูลในแท็บ 4 (ปรับให้สวยงามทันสมัย) -->
+            <div style="text-align: center; margin-top: 20px; display: flex; justify-content: center; gap: 12px;">
+                <button type="button" id="tab4ClearBtn" style="padding: 12px 30px; font-size: 15px; font-weight: 600; cursor: pointer; border: 1.5px solid #CFD8DC; background: #ECEFF1; color: #455A64; border-radius: 12px; transition: all 0.2s ease; font-family:'Kanit', sans-serif;">
+                    <i class="fa-solid fa-trash-can mr-1.5"></i> ล้างข้อมูล
+                </button>
+                <button type="button" id="tab4ShowBtn" class="primary" style="padding: 12px 30px; font-size: 15px; font-weight: 600; cursor: pointer; background: #2563EB; color: white; border: none; border-radius: 12px; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);">
+                    ⚡ แสดงตัวเลือก
+                </button>
             </div>
 
             <!-- จุดแสดงผลความแตกต่างและหน้าจอแสดงแผนกระจายยาทุกทางเลือก -->
@@ -1112,7 +1094,8 @@
 
             <!-- เครดิตผู้พัฒนาโปรแกรม Tab 4 -->
             <div style="margin-top: 25px; padding-top: 10px; border-top: 1px solid #ddd; text-align: right; font-size: 12px; color: var(--muted);">
-                <p>พัฒนาโดย ภก.นราวิชญ์ คำยวง (กลุ่มงานเภสัชกรรม โรงพยาบาลอุทัย)</p>
+                <p>พัฒนาโดย ภก.นราวิชญ์ คำยวง</p>
+                <p>กลุ่มงานเภสัชกรรม โรงพยาบาลอุทัย</p>
             </div>
         </section>
     </div>
@@ -1236,14 +1219,17 @@ function switchTab(tabId) {
         highlightGuidelineByINR(parseFloat(document.getElementById('inr').value), false);
         calculate();
     } else if (tabId === 'tab-quick') {
-        // ประสานเชื่อมข้อมูลขนาดยาใหม่มาคำนวณต่อในแท็บที่ 4
         const normalWeekly = parseFloat(document.getElementById('weeklyDose').value) || parseFloat(document.getElementById('manualWeeklyDoseInput').value) || 0;
+        
+        // แก้ไข: ช่องจำนวนวันนัดเป็นค่าว่าง เมื่อเปิดแอป ไม่ต้องมีข้อความใดๆ 
+        document.getElementById('tab4Days').value = "";
+        
         if (normalWeekly > 0) {
             document.getElementById('tab4WeeklyDose').value = normalWeekly;
             document.getElementById('tab4PreviousDose').value = normalWeekly;
             generateTab4DoseAdjustmentTable();
             displayTab4PercentageChange();
-            generateTab4Suggestions(); // คำนวณและแสดงแผนยาทันทีเมื่อกดสลับแท็บ
+            generateTab4Suggestions();
         }
     }
 }
@@ -1368,7 +1354,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return score;
     }
 
-    function generatePillImage(count, pillMg){
+    function generatePillImage(count, pillMg) {
         let html = '';
         const fullPills = Math.floor(count);
         const hasHalf = count % 1 !== 0;
@@ -1408,18 +1394,18 @@ document.addEventListener('DOMContentLoaded', function() {
             let [t3, t2] = key.split('_').map(Number);
             let days = dayGroups[key];
             if (t3 === 0 && t2 === 0) {
-                parts.push(`วันหยุดยา (${days} วัน)`);
+                parts.push("วันหยุดยา (" + days + " วัน)");
             } else {
                 let doseParts = [];
                 if (t3 > 0) {
-                    let pillStr = t3 % 1 === 0 ? `${t3} เม็ด` : `${t3.toFixed(1)} เม็ด`;
-                    doseParts.push(`Warfarin 3 mg ขนาด ${pillStr}`);
+                    let pillStr = t3 % 1 === 0 ? t3 + " เม็ด" : t3.toFixed(1) + " เม็ด";
+                    doseParts.push("Warfarin 3 mg ขนาด " + pillStr);
                 }
                 if (t2 > 0) {
-                    let pillStr = t2 % 1 === 0 ? `${t2} เม็ด` : `${t2.toFixed(1)} เม็ด`;
-                    doseParts.push(`Warfarin 2 mg ขนาด ${pillStr}`);
+                    let pillStr = t2 % 1 === 0 ? t2 + " เม็ด" : t2.toFixed(1) + " เม็ด";
+                    doseParts.push("Warfarin 2 mg ขนาด " + pillStr);
                 }
-                parts.push(`${doseParts.join(' ร่วมกับ ')} จำนวน ${days} วัน`);
+                parts.push(doseParts.join(' ร่วมกับ ') + " จำนวน " + days + " วัน");
             }
         }
         return parts.join(' | ');
@@ -1456,45 +1442,45 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const totalWeekly = combo.total;
         const diffWeekPct = (isNaN(weeklyDose) || weeklyDose === 0) ? 0 : ((totalWeekly-weeklyDose)/weeklyDose)*100;
-        const pctText = `${diffWeekPct>0?'+':''}${diffWeekPct.toFixed(2)}%`;
+        const pctText = (diffWeekPct>0?'+':'') + diffWeekPct.toFixed(2) + "%";
         const dayNames = ['จันทร์','อังคาร','พุธ','พฤหัส','ศุกร์','เสาร์','อาทิตย์'];
         const dayClasses = ['mon','tue','wed','thu','fri','sat','sun']; 
         
         let rangeBadge = "";
         if (isTab1) {
             if (inRange) {
-                rangeBadge = `<span style="background-color: #E8F5E9; color: #2E7D32; padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-left: 10px; border: 1px solid #A5D6A7;">🟢 แนะนำตามแนวทาง (${diffWeekPct >= 0 ? '+' : ''}${diffWeekPct.toFixed(1)}%)</span>`;
+                rangeBadge = "<span style=\"background-color: #E8F5E9; color: #2E7D32; padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-left: 10px; border: 1px solid #A5D6A7;\">🟢 แนะนำตามแนวทาง (" + (diffWeekPct >= 0 ? '+' : '') + diffWeekPct.toFixed(1) + "%)</span>";
             } else {
-                rangeBadge = `<span style="background-color: #ECEFF1; color: #546E7A; padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-left: 10px; border: 1px solid #CFD8DC;">⚪ นอกช่วงแนะนำ (${diffWeekPct >= 0 ? '+' : ''}${diffWeekPct.toFixed(1)}%)</span>`;
+                rangeBadge = "<span style=\"background-color: #ECEFF1; color: #546E7A; padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-left: 10px; border: 1px solid #CFD8DC;\">⚪ นอกช่วงแนะนำ (" + (diffWeekPct >= 0 ? '+' : '') + diffWeekPct.toFixed(1) + "%)</span>";
             }
         }
 
-        let sectionBorderColorClass = `plan-${planIndex}`;
+        let sectionBorderColorClass = "plan-" + planIndex;
         if (isTab1 && inRange) {
-            sectionBorderColorClass = `plan-5`; 
+            sectionBorderColorClass = "plan-5"; 
         }
 
         let headerText = '';
         if (isBestManual) {
             let cleanTitle = title.replace('ใช้ผสมทั้ง', '').trim();
-            headerText = `${cleanTitle} — รวม ${totalWeekly.toFixed(2)} mg/สัปดาห์ (${pctText} จากเดิม)`;
+            headerText = cleanTitle + " — รวม " + totalWeekly.toFixed(2) + " mg/สัปดาห์ (" + pctText + " จากเดิม)";
         } else {
-            headerText = `ตัวเลือก: ${title} — รวม ${totalWeekly.toFixed(2)} mg/สัปดาห์ (${pctText} จากเดิม)`;
+            headerText = "ตัวเลือก: " + title + " — รวม " + totalWeekly.toFixed(2) + " mg/สัปทีละ (" + pctText + " จากเดิม)";
         }
 
-        let html = `<div class="plan-section ${sectionBorderColorClass}">`;
+        let html = "<div class=\"plan-section " + sectionBorderColorClass + "\">";
         
         if (!isBestManual) {
-            html += `<h4 style="display:flex; align-items:center; flex-wrap:wrap; gap:6px; margin-top:0; font-size: 14px;">${headerText} ${rangeBadge}</h4>`;
+            html += "<h4 style=\"display:flex; align-items:center; flex-wrap:wrap; gap:6px; margin-top:0; font-size: 14px;\">" + headerText + " " + rangeBadge + "</h4>";
         }
         
         const planSummaryText = getPlanFriendlySummary(perDay3, perDay2, isFixedDose, combo, pillChoice);
-        html += `<div style="margin: 4px 0 10px 0; font-size: 13.5px; color: #00796B; font-weight: 500; background: rgba(0, 150, 136, 0.06); padding: 8px 12px; border-radius: 8px; border-left: 4px solid #009688; line-height: 1.5;">
-                    📝 สรุปแผนการกิน: ${planSummaryText}
-                 </div>`;
+        html += "<div style=\"margin: 4px 0 10px 0; font-size: 13.5px; color: #00796B; font-weight: 500; background: rgba(0, 150, 136, 0.06); padding: 8px 12px; border-radius: 8px; border-left: 4px solid #009688; line-height: 1.5;\">" +
+                    "📝 สรุปแผนการกิน: " + planSummaryText +
+                 "</div>";
 
         if (displayMode === 'image') {
-            html += `<div class="plan-grid">`;
+            html += "<div class=\"plan-grid\">";
             for(let i=0; i<7; i++){
                 let t3 = perDay3[i]; 
                 let t2 = perDay2[i]; 
@@ -1518,8 +1504,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const totalPillUnits = Math.ceil(t3) + Math.ceil(t2);
                 const shrinkClass = totalPillUnits >= 5 ? 'shrink-pills' : '';
                 let doseText = '';
-                if (t3 > 0) doseText += `3 mg x ${t3 % 1 === 0 ? t3 : t3.toFixed(1)}\n`;
-                if (t2 > 0) doseText += `2 mg x ${t2 % 1 === 0 ? t2 : t2.toFixed(1)}`;
+                if (t3 > 0) doseText += "3 mg x " + (t3 % 1 === 0 ? t3 : t3.toFixed(1)) + "\n";
+                if (t2 > 0) doseText += "2 mg x " + (t2 % 1 === 0 ? t2 : t2.toFixed(1));
 
                 let dailyMgStyle = 'color: #4CAF50; font-weight: 500; margin-bottom: 6px;';
                 if (isTab1 && inRange) {
@@ -1530,38 +1516,38 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
                 html += `
-                    <div class="day-card" style="${isTab1 && inRange ? 'border: 1.5px solid #81C784;' : ''}">
-                        <div class="day-name ${dayClasses[i]}">${dayNames[i]}</div>
-                        <div class="daily-mg" style="${dailyMgStyle}">(${mg.toFixed(1)} mg)</div>
-                        <div class="pill-container ${shrinkClass}">${t2Html}${t3Html}</div>
-                        <div class="daily-dose-text" style="white-space:pre-line">${doseText.trim()}</div>
+                    <div class="day-card" style="` + (isTab1 && inRange ? 'border: 1.5px solid #81C784;' : '') + `">
+                        <div class="day-name ` + dayClasses[i] + `">` + dayNames[i] + `</div>
+                        <div class="daily-mg" style="` + dailyMgStyle + `">(` + mg.toFixed(1) + ` mg)</div>
+                        <div class="pill-container ` + shrinkClass + `">` + t2Html + t3Html + `</div>
+                        <div class="daily-dose-text" style="white-space:pre-line">` + doseText.trim() + `</div>
                     </div>
                 `;
             }
-            html += `</div>`;
+            html += "</div>";
             const currentDaysInput = isTab1 ? document.getElementById('days') : document.getElementById('manualDaysInput');
             const calculatedDaysVal = currentDaysInput ? (parseInt(currentDaysInput.value) || 0) : 7;
-            html += `<h4 style="margin-bottom:8px; font-size:13px;">รวมยาสำหรับ ${calculatedDaysVal} วันนัด:</h4>`;
-            html += `<div class="summary">`;
+            html += "<h4 style=\"margin-bottom:8px; font-size:13px;\">รวมยาสำหรับ " + calculatedDaysVal + " วันนัด:</h4>";
+            html += "<div class=\"summary\">";
             if(total3PillCount > 0) {
-                html += `<div class="summary-line"><span class="summary-pill pill-icon-3mg"></span> 3 mg: ${total3PillCount} เม็ด</div>`;
+                html += "<div class=\"summary-line\"><span class=\"summary-pill pill-icon-3mg\"></span> 3 mg: " + total3PillCount + " เม็ด</div>";
             }
             if(total2PillCount > 0) {
-                html += `<div class="summary-line"><span class="summary-pill pill-icon-2mg"></span> 2 mg: ${total2PillCount} เม็ด</div>`;
+                html += "<div class=\"summary-line\"><span class=\"summary-pill pill-icon-2mg\"></span> 2 mg: " + total2PillCount + " เม็ด</div>";
             }
-            html += `</div>`;
+            html += "</div>";
         } else {
             const pillTypes = [];
             if (pillChoice === '3' || pillChoice === 'both' || pillChoice === 'both_half' || pillChoice === '3mg_fixed_1dayoff') pillTypes.push({ label: '3 mg (เม็ด)', type: 3 });
             if (pillChoice === '2' || pillChoice === 'both' || pillChoice === 'both_half' || pillChoice === '2mg_fixed_1dayoff') pillTypes.push({ label: '2 mg (เม็ด)', type: 2 });
             pillTypes.push({ label: 'รวม (mg)', type: 'total' });
             
-            let headerCols = `<th>ชนิดยา</th>`;
-            dayNames.forEach(day => { headerCols += `<th>${day}</th>`; });
-            html += `<table class="plan-table ${sectionBorderColorClass}"><thead><tr>${headerCols}</tr></thead><tbody>`;
+            let headerCols = "<th>ชนิดยา</th>";
+            dayNames.forEach(day => { headerCols += "<th>" + day + "</th>"; });
+            html += "<table class=\"plan-table " + sectionBorderColorClass + "\"><thead><tr>" + headerCols + "</tr></thead><tbody>";
             
             pillTypes.forEach(pillType => {
-                let dataRow = `<tr><td style="font-weight: 600;">${pillType.label}</td>`;
+                let dataRow = "<tr><td style=\"font-weight: 600;\">" + pillType.label + "</td>";
                 for(let i=0; i<7; i++){
                     let t3 = perDay3[i];
                     let t2 = perDay2[i];
@@ -1600,23 +1586,23 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                     }
                     if (isZeroVal) {
-                        cellContent = `<span style="color: #E2E8F0; font-weight: 300;">${value}</span>`;
+                        cellContent = "<span style=\"color: #E2E8F0; font-weight: 300;\">" + value + "</span>";
                     }
 
-                    dataRow += `<td>${cellContent}</td>`;
+                    dataRow += "<td>" + cellContent + "</td>";
                 }
-                dataRow += `</tr>`;
+                dataRow += "</tr>";
                 html += dataRow;
             });
-            html += `</tbody></table>`;
+            html += "</tbody></table>";
             const currentDaysInput = isTab1 ? document.getElementById('days') : document.getElementById('manualDaysInput');
             const calculatedDaysVal = currentDaysInput ? (parseInt(currentDaysInput.value) || 0) : 7;
-            let noteText = `สรุปจำนวนเม็ดยา (${calculatedDaysVal} วันนัด)\n`;
-            if(total3PillCount > 0 && (pillChoice === '3' || pillChoice === 'both' || pillChoice === 'both_half' || pillChoice === '3mg_fixed_1dayoff')) noteText += `รวม 3 mg: ${total3PillCount} เม็ด\n`;
-            if(total2PillCount > 0 && (pillChoice === '2' || pillChoice === 'both' || pillChoice === 'both_half' || pillChoice === '2mg_fixed_1dayoff')) noteText += `รวม 2 mg: ${total2PillCount} เม็ด`;
-            if(noteText.trim()) html += `<div class="note" style="white-space:pre-line">${noteText}</div>`;
+            let noteText = "สรุปจำนวนเม็ดยา (" + calculatedDaysVal + " วันนัด)\n";
+            if(total3PillCount > 0 && (pillChoice === '3' || pillChoice === 'both' || pillChoice === 'both_half' || pillChoice === '3mg_fixed_1dayoff')) noteText += "รวม 3 mg: " + total3PillCount + " เม็ด\n";
+            if(total2PillCount > 0 && (pillChoice === '2' || pillChoice === 'both' || pillChoice === 'both_half' || pillChoice === '2mg_fixed_1dayoff')) noteText += "รวม 2 mg: " + total2PillCount + " เม็ด";
+            if(noteText.trim()) html += "<div class=\"note\" style=\"white-space:pre-line\">" + noteText + "</div>";
         }
-        html += `</div>`;
+        html += "</div>";
         return html;
     }
 
@@ -1671,37 +1657,37 @@ document.addEventListener('DOMContentLoaded', function() {
                 adj.minPct=0.10;
                 adj.maxPct=0.20;
                 adj.avgPct=0.15;
-                adj.note='เพิ่มขนาดยารายสัปดาห์ 10–20%';
+                adj.note = 'เพิ่มขนาดยารายสัปดาห์ 10–20%';
             } else if(inr>=1.5 && inr<2.0){
                 adj.minPct=0.05;
                 adj.maxPct=0.10;
                 adj.avgPct=0.075;
-                adj.note='เพิ่ม 5–10% หรือพิจารณาไม่ปรับ แต่ติดตาม INR บ่อยขึ้น';
+                adj.note = 'เพิ่ม 5–10% หรือพิจารณาไม่ปรับ แต่ติดตาม INR บ่อยขึ้น';
             } else if(inr>=2.0 && inr<3.1){
                 adj.minPct=0;
                 adj.maxPct=0;
                 adj.avgPct=0;
-                adj.note='ไม่ต้องปรับยา';
+                adj.note = 'ไม่ต้องปรับยา';
             } else if(inr>=3.1 && inr<4.0){
                 adj.minPct=-0.10;
                 adj.maxPct=-0.05;
                 adj.avgPct=-0.075;
-                adj.note='ลดขนาดยารายสัปดาห์ 5–10%';
+                adj.note = 'ลดขนาดยารายสัปดาห์ 5–10%';
             } else if(inr>=4.0 && inr<5.0){
                 adj.minPct=-0.10;
                 adj.maxPct=-0.10;
                 adj.avgPct=-0.10;
-                adj.note='หยุดยา 1 วัน แล้วกลับมาเริ่มด้วยขนาดที่ลดลง 10%';
+                adj.note = 'หยุดยา 1 วัน แล้วกลับมาเริ่มด้วยขนาดที่ลดลง 10%';
             } else if(inr>=5.0 && inr<9.0){
                 adj.minPct=-0.20;
                 adj.maxPct=-0.20;
                 adj.avgPct=-0.20;
-                adj.note='หยุดยา 2 วัน แล้วกลับมาเริ่มด้วยขนาดที่ลดลง 20% — พิจารณาให้ Vitamin K₁รับประทาน';
+                adj.note = 'หยุดยา 2 วัน แล้วกลับมาเริ่มด้วยขนาดที่ลดลง 20% — พิจารณาให้ Vitamin K₁รับประทาน';
             } else if(inr>=9.0){
                 adj.minPct=null;
                 adj.maxPct=null;
                 adj.avgPct=null;
-                adj.note='INR > 9 : ให้ Vitamin K1รับประทาน 2.5-5mg และติดตาม INR อย่างใกล้ชิด';
+                adj.note = 'ให้ Vitamin K1รับประทาน 2.5-5mg และติดตาม INR อย่างใกล้ชิด';
             }
         }
 
@@ -2157,7 +2143,39 @@ document.addEventListener('DOMContentLoaded', function() {
     // ==========================================
     //   ⚡ TAB 4 SPECIFIC FUNCTIONS (INTEGRATED)
     // ==========================================
+    // ปรับตรรกะใหม่: ดึงยอดรวมมิลลิกรัมและชนิดยาที่สลับวันมากรองเป็นคีย์รวมกัน (Order-Independent) เพื่อยุบแสดงเพียง 1 ตารางหลักตามภาพ
+    function getTab4SemanticKey(comboWeekly) {
+        const dayKeys = comboWeekly.map(day => {
+            if (!day || day.length === 0) return 'hold';
+            return day.map(p => `${p.mg}_${p.half}_${p.count}`).sort().join('|');
+        });
+        return dayKeys.sort().join(','); // การเรียงลำดับสตริงของทั้ง 7 วัน จะช่วยให้ขนาดยาเดิมที่มีการสลับวันไปมา ยุบตัวเหลือตารางเดียวที่เสถียรที่สุด
+    }
+
+    function aggregateCombo(combo) {
+        const counts = {};
+        combo.forEach(p => {
+            const key = `${p.mg}-${p.half}`;
+            if (!counts[key]) {
+                counts[key] = { mg: p.mg, half: p.half, count: 0 };
+            }
+            counts[key].count++;
+        });
+        return Object.values(counts);
+    }
+
     const tab4DaysName = ['จ.', 'อ.', 'พ.', 'พฤ.', 'ศ.', 'ส.', 'อา.'];
+    const tab4DaysFullName = ['จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์', 'อาทิตย์'];
+    const tab4DayHeaderColors = {
+        'จ.': '#FFECC6',
+        'อ.': '#E6E1F4',
+        'พ.': '#E6F7E6',
+        'พฤ.': '#FEEED7',
+        'ศ.': '#E1F1FD',
+        'ส.': '#FDE8F1',
+        'อา.': '#FCE6E6'
+    };
+
     const TAB4_DOSE_MULTIPLIER_LIMIT = 2.5;
     const TAB4_ABSOLUTE_MAX_DAILY_DOSE = 15;
     const TAB4_FLOAT_TOLERANCE = 0.01;
@@ -2198,15 +2216,45 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         tab4AdjustmentTable.innerHTML = '<h3 class="small" style="font-weight: 600; text-align: center; margin-bottom: 8px;">ปรับขนาดยาอัตโนมัติเปรียบเทียบจากยาเดิม <span class="small" style="font-weight: normal; font-size:12px;">🖱️ (คลิกเพื่อเลือก)</span></h3>';
-        const percentages = [-20, -15, -10, -5, 0, 5, 10, 15, 20];
+        
+        // แก้ไข: กรณีที่ค่า mg ที่กรอก < 10 mg ปรับ % ตัวแปรผันตาม mg ไม่เกิน 30% ถ้าตั้งแต่ 10 mg ขึ้นไป ไม่เกิน 20%
+        const maxPctLimit = prev < 10 ? 30.01 : 20.01;
+        
+        // Generate steps of 0.5 mg
+        const options = [];
+        // Let's go down from prev
+        let step = 0.5;
+        while (true) {
+            const target = prev - step;
+            if (target <= 0) break;
+            const pct = ((target - prev) / prev) * 100;
+            if (Math.abs(pct) > maxPctLimit) break; 
+            options.push({ dose: target, pct: pct });
+            step += 0.5;
+        }
+        // Add 0%
+        options.push({ dose: prev, pct: 0 });
+        // Go up from prev
+        step = 0.5;
+        while (true) {
+            const target = prev + step;
+            const pct = ((target - prev) / prev) * 100;
+            if (Math.abs(pct) > maxPctLimit) break; 
+            options.push({ dose: target, pct: pct });
+            step += 0.5;
+        }
+        
+        // Sort options by dose ascending
+        options.sort((a, b) => a.dose - b.dose);
+        
         let buttonsHtml = '<div class="radio-row" style="justify-content: center; gap: 6px;">';
-        percentages.forEach(p => {
-            const exactDose = prev * (1 + p / 100);
-            const roundedDose = Math.round(exactDose * 2) / 2;
-            const buttonColorStyle = p < 0 ? 'background: #FFEBEE; color: #C62828; border-color: #FFCDD2;' : (p === 0 ? 'background: #E3F2FD; color: #0D47A1; border-color: #BBDEFB;' : 'background: #E8F5E9; color: #2E7D32; border-color: #C8E6C9;');
+        options.forEach(opt => {
+            const p = opt.pct;
+            const roundedDose = opt.dose;
+            const buttonColorStyle = p < -0.01 ? 'background: #FFEBEE; color: #C62828; border-color: #FFCDD2;' : (Math.abs(p) < 0.01 ? 'background: #E3F2FD; color: #0D47A1; border-color: #BBDEFB;' : 'background: #E8F5E9; color: #2E7D32; border-color: #C8E6C9;');
             buttonsHtml += `
                 <button type="button" data-dose="${roundedDose}" class="tab4-dose-adjust-btn" style="padding: 6px 10px; border-radius: 8px; font-family:\'Kanit\', sans-serif; cursor: pointer; transition: all 0.2s; font-size: 13px; font-weight: bold; border: 1px solid #ddd; ${buttonColorStyle}">
-                    <div>${p > 0 ? '+' : ''}${p}%</div>
+                    <div>${p > 0.01 ? '+' : ''}${p.toFixed(1)}%</div>
                     <div style="font-size: 11px;">${roundedDose.toFixed(1)} mg</div>
                 </button>`;
         });
@@ -2246,7 +2294,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const absPctChange = Math.abs(pctChange).toFixed(1);
                 const color = isIncrease ? '#2E7D32' : '#C62828';
                 const bgColor = isIncrease ? '#E8F5E9' : '#FFEBEE';
-                const borderColor = isIncrease ? '#C8E6C9' : '#FFCDD2';
+                const borderColor = isIncrease ? '#FFCDD2' : '#FFCDD2';
                 
                 content = `
                     <div style="padding: 10px; border: 1.5px solid ${borderColor}; background: ${bgColor}; border-radius: 12px; text-align: center; font-weight: bold; color: ${color}; font-size: 14.5px;">
@@ -2255,6 +2303,35 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             tab4PercentageChange.innerHTML = content;
         }
+    }
+
+    function getTab4FriendlySummary(pills3, pills2) {
+        const p3Groups = {};
+        const p2Groups = {};
+        
+        for (let i = 0; i < 7; i++) {
+            if (pills3[i] > 0) {
+                p3Groups[pills3[i]] = (p3Groups[pills3[i]] || 0) + 1;
+            }
+            if (pills2[i] > 0) {
+                p2Groups[pills2[i]] = (p2Groups[pills2[i]] || 0) + 1;
+            }
+        }
+        
+        const summaryParts = [];
+        Object.keys(p3Groups).sort((a, b) => b - a).forEach(qty => {
+            const daysCount = p3Groups[qty];
+            const qtyText = parseFloat(qty) === 0.5 ? "0.5 เม็ด" : `${qty} เม็ด`;
+            summaryParts.push(`Warfarin 3 mg ขนาด ${qtyText} จำนวน ${daysCount} วัน`);
+        });
+        
+        Object.keys(p2Groups).sort((a, b) => b - a).forEach(qty => {
+            const daysCount = p2Groups[qty];
+            const qtyText = parseFloat(qty) === 0.5 ? "0.5 เม็ด" : `${qty} เม็ด`;
+            summaryParts.push(`Warfarin 2 mg ขนาด ${qtyText} จำนวน ${daysCount} วัน`);
+        });
+        
+        return summaryParts.join(' | ') || 'หยุดยา';
     }
 
     function generateTab4Suggestions() {
@@ -2274,88 +2351,93 @@ document.addEventListener('DOMContentLoaded', function() {
         displayTab4PercentageChange();
 
         let { daysUntilAppointment, isAppointmentCalculation, startDate } = getTab4AppointmentInfo();
-        const specialDayPattern = document.querySelector('input[name="tab4SpecialDayPattern"]:checked').value;
         
         let options = [];
         const seenOptions = new Set();
 
-        // Case 1: Uniform dose
-        const dailyDoseTarget = weeklyDose / 7;
-        if (dailyDoseTarget >= 0) {
-            const dailyCombos = findTab4Comb(dailyDoseTarget, availablePills, allowHalf, dailyDoseTarget === 0 ? 0 : 1, 4);
-            dailyCombos.forEach(c => {
-                const actualWeeklyDose = c.reduce((sum, p) => sum + (p.half ? p.mg * 0.5 * p.count : p.mg * p.count), 0) * 7;
-                if (Math.abs(actualWeeklyDose - weeklyDose) < TAB4_FLOAT_TOLERANCE) {
-                    const key = `uniform-${JSON.stringify(c.map(p => `${p.mg}-${p.count}-${p.half}`).sort())}`;
-                    if (!seenOptions.has(key)) {
-                        seenOptions.add(key);
-                        options.push({ type: 'uniform', combo: c, weeklyDoseActual: actualWeeklyDose, priority: 0 });
-                    }
-                }
-            });
-        }
+        // Try both special day patterns internally so the user always gets the best options
+        const patternsToTry = ['fri-sun', 'mon-wed-fri'];
 
-        // Case 2: Non-uniform doses
-        for (let numStopDays = 0; numStopDays <= 3; numStopDays++) {
-            for (let numSpecialDays = 0; numSpecialDays <= (3 - numStopDays); numSpecialDays++) {
-                const normalDaysCount = 7 - numStopDays - numSpecialDays;
-                if (normalDaysCount === 7) continue;
-
-                let stopDaysIndices = [];
-                let specialDaysIndices = [];
-
-                if (specialDayPattern === 'fri-sun') {
-                    stopDaysIndices = Array.from({ length: numStopDays }, (_, i) => 6 - i);
-                    specialDaysIndices = Array.from({ length: numSpecialDays }, (_, i) => 6 - numStopDays - i);
-                } else { // mon-wed-fri
-                    if (numSpecialDays === 3) { 
-                        specialDaysIndices = [0, 2, 4];
-                    } else if (numSpecialDays === 2) {
-                        specialDaysIndices = [0, 4];
-                        if (numStopDays === 1) {
-                            stopDaysIndices = [2];
+        patternsToTry.forEach(specialDayPattern => {
+            // Case 1: Uniform dose
+            const dailyDoseTarget = weeklyDose / 7;
+            if (dailyDoseTarget >= 0) {
+                const dailyCombos = findTab4Comb(dailyDoseTarget, availablePills, allowHalf, dailyDoseTarget === 0 ? 0 : 1, 4);
+                dailyCombos.forEach(c => {
+                    const actualWeeklyDose = c.reduce((sum, p) => sum + (p.half ? p.mg * 0.5 * p.count : p.mg * p.count), 0) * 7;
+                    if (Math.abs(actualWeeklyDose - weeklyDose) < TAB4_FLOAT_TOLERANCE) {
+                        const comboWeekly = Array(7).fill(c);
+                        const semanticKey = getTab4SemanticKey(comboWeekly);
+                        if (!seenOptions.has(semanticKey)) {
+                            seenOptions.add(semanticKey);
+                            options.push({ type: 'uniform', combo: c, weeklyDoseActual: actualWeeklyDose, priority: 0 });
                         }
-                    } else if (numSpecialDays === 1) {
-                        if (numStopDays === 2) {
-                            specialDaysIndices = [2];
-                            stopDaysIndices = [0, 4];
-                        } else if (numStopDays === 1) {
-                            specialDaysIndices = [0];
-                            stopDaysIndices = [2];
+                    }
+                });
+            }
+
+            // Case 2: Non-uniform doses
+            for (let numStopDays = 0; numStopDays <= 3; numStopDays++) {
+                for (let numSpecialDays = 0; numSpecialDays <= (3 - numStopDays); numSpecialDays++) {
+                    const normalDaysCount = 7 - numStopDays - numSpecialDays;
+                    if (normalDaysCount === 7) continue;
+
+                    let stopDaysIndices = [];
+                    let specialDaysIndices = [];
+
+                    if (specialDayPattern === 'fri-sun') {
+                        stopDaysIndices = Array.from({ length: numStopDays }, (_, i) => 6 - i);
+                        specialDaysIndices = Array.from({ length: numSpecialDays }, (_, i) => 6 - numStopDays - i);
+                    } else { // mon-wed-fri
+                        if (numSpecialDays === 3) { 
+                            specialDaysIndices = [0, 2, 4];
+                        } else if (numSpecialDays === 2) {
+                            specialDaysIndices = [0, 4];
+                            if (numStopDays === 1) {
+                                stopDaysIndices = [2];
+                            }
+                        } else if (numSpecialDays === 1) {
+                            if (numStopDays === 2) {
+                                specialDaysIndices = [2];
+                                stopDaysIndices = [0, 4];
+                            } else if (numStopDays === 1) {
+                                specialDaysIndices = [0];
+                                stopDaysIndices = [2];
+                            } else {
+                                specialDaysIndices = [2];
+                            }
                         } else {
-                            specialDaysIndices = [2];
+                            if (numStopDays === 3) stopDaysIndices = [0, 2, 4];
+                            else if (numStopDays === 2) stopDaysIndices = [0, 4];
+                            else if (numStopDays === 1) stopDaysIndices = [2];
                         }
-                    } else {
-                        if (numStopDays === 3) stopDaysIndices = [0, 2, 4];
-                        else if (numStopDays === 2) stopDaysIndices = [0, 4];
-                        else if (numStopDays === 1) stopDaysIndices = [2];
                     }
-                }
 
-                for (let baseDose = 0.5; baseDose <= TAB4_ABSOLUTE_MAX_DAILY_DOSE; baseDose += 0.5) {
-                    const normalDayCombos = findTab4Comb(baseDose, availablePills, allowHalf, 1, 4);
-                    if (normalDayCombos.length === 0) continue;
+                    for (let baseDose = 0.5; baseDose <= TAB4_ABSOLUTE_MAX_DAILY_DOSE; baseDose += 0.5) {
+                        const normalDayCombos = findTab4Comb(baseDose, availablePills, allowHalf, 1, 4);
+                        if (normalDayCombos.length === 0) continue;
 
-                    const remainingDose = weeklyDose - (baseDose * normalDaysCount);
-                    
-                    if (numSpecialDays === 0) {
-                        if (Math.abs(remainingDose) > TAB4_FLOAT_TOLERANCE) continue;
-                        addTab4NonUniformOption(options, seenOptions, { baseDose, numStopDays, stopDaysIndices, normalDayCombos, weeklyDose, availablePills });
-                    } 
-                    else {
-                        if (remainingDose <= TAB4_FLOAT_TOLERANCE) continue;
-                        const specialDayDoseTarget = +(remainingDose / numSpecialDays).toFixed(2);
-                        if (Math.abs(specialDayDoseTarget - baseDose) < TAB4_FLOAT_TOLERANCE || specialDayDoseTarget <= 0) continue;
-                        if (specialDayDoseTarget > TAB4_ABSOLUTE_MAX_DAILY_DOSE || specialDayDoseTarget > baseDose * TAB4_DOSE_MULTIPLIER_LIMIT) continue;
+                        const remainingDose = weeklyDose - (baseDose * normalDaysCount);
                         
-                        const specialDayCombos = findTab4Comb(specialDayDoseTarget, availablePills, allowHalf, 1, 4);
-                        if (specialDayCombos.length === 0) continue;
-                        
-                        addTab4NonUniformOption(options, seenOptions, { baseDose, numStopDays, stopDaysIndices, numSpecialDays, specialDaysIndices, specialDayDoseTarget, normalDayCombos, specialDayCombos, weeklyDose, availablePills });
+                        if (numSpecialDays === 0) {
+                            if (Math.abs(remainingDose) > TAB4_FLOAT_TOLERANCE) continue;
+                            addTab4NonUniformOption(options, seenOptions, { baseDose, numStopDays, stopDaysIndices, normalDayCombos, weeklyDose, availablePills });
+                        } 
+                        else {
+                            if (remainingDose <= TAB4_FLOAT_TOLERANCE) continue;
+                            const specialDayDoseTarget = +(remainingDose / numSpecialDays).toFixed(2);
+                            if (Math.abs(specialDayDoseTarget - baseDose) < TAB4_FLOAT_TOLERANCE || specialDayDoseTarget <= 0) continue;
+                            if (specialDayDoseTarget > TAB4_ABSOLUTE_MAX_DAILY_DOSE || specialDayDoseTarget > baseDose * TAB4_DOSE_MULTIPLIER_LIMIT) continue;
+                            
+                            const specialDayCombos = findTab4Comb(specialDayDoseTarget, availablePills, allowHalf, 1, 4);
+                            if (specialDayCombos.length === 0) continue;
+                            
+                            addTab4NonUniformOption(options, seenOptions, { baseDose, numStopDays, stopDaysIndices, numSpecialDays, specialDaysIndices, specialDayDoseTarget, normalDayCombos, specialDayCombos, weeklyDose, availablePills });
+                        }
                     }
                 }
             }
-        }
+        });
 
         sortAndRenderTab4Options(options, daysUntilAppointment, isAppointmentCalculation, startDate);
     }
@@ -2379,9 +2461,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
                 if (Math.abs(actualWeeklyDose - weeklyDose) < TAB4_FLOAT_TOLERANCE) {
-                     const key = `nonuniform-${JSON.stringify(comboWeekly.map(day => day ? day.map(p => `${p.mg}-${p.count}-${p.half}`).sort().join('|') : 'null'))}`;
-                     if (!seenOptions.has(key)) {
-                        seenOptions.add(key);
+                     const semanticKey = getTab4SemanticKey(comboWeekly);
+                     if (!seenOptions.has(semanticKey)) {
+                        seenOptions.add(semanticKey);
                         options.push({
                             type: 'non-uniform', comboWeekly, weeklyDoseActual: actualWeeklyDose,
                             baseDose, specialDose: specialDayDoseTarget,
@@ -2450,103 +2532,243 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function renderTab4Option(option, index, daysUntilAppointment, isAppointmentCalculation, startDate) {
-        let description = '';
+        const dailyDoses = Array(7).fill(0);
+        const dailyPills3 = Array(7).fill(0);
+        const dailyPills2 = Array(7).fill(0);
+        
         if (option.type === 'uniform') {
-            const dailyDose = option.combo.reduce((sum, p) => sum + (p.half ? p.mg * 0.5 * p.count : p.mg * p.count), 0);
-            description = dailyDose > 0 ? `ทุกวัน วันละ ${dailyDose.toFixed(1)} mg` : 'หยุดยา';
-        } else { // non-uniform
-            let parts = [];
-            if(option.baseDose > 0) parts.push(`วันธรรมดา ${option.baseDose.toFixed(1)} mg`);
-            if (option.numSpecialDays > 0) {
-                parts.push(`วันพิเศษ ${option.specialDose.toFixed(1)} mg (${option.specialDays.map(idx => tab4DaysName[idx]).join(', ')})`);
+            for (let i = 0; i < 7; i++) {
+                option.combo.forEach(p => {
+                    const val = p.half ? p.mg * 0.5 * p.count : p.mg * p.count;
+                    dailyDoses[i] += val;
+                    if (p.mg === 3) dailyPills3[i] += p.half ? 0.5 * p.count : p.count;
+                    if (p.mg === 2) dailyPills2[i] += p.half ? 0.5 * p.count : p.count;
+                });
             }
-            if (option.numStopDays > 0) {
-                parts.push(`หยุดยา ${option.numStopDays} วัน (${option.stopDays.map(idx => tab4DaysName[idx]).join(', ')})`);
+        } else {
+            for (let i = 0; i < 7; i++) {
+                const combo = option.comboWeekly[i];
+                if (combo) {
+                    combo.forEach(p => {
+                        const val = p.half ? p.mg * 0.5 * p.count : p.mg * p.count;
+                        dailyDoses[i] += val;
+                        if (p.mg === 3) dailyPills3[i] += p.half ? 0.5 * p.count : p.count;
+                        if (p.mg === 2) dailyPills2[i] += p.half ? 0.5 * p.count : p.count;
+                    });
+                }
             }
-            description = parts.join(', ');
         }
 
-        const selectedDisplayOrder = document.querySelector('input[name="tab4DisplayOrder"]:checked').value;
-        const displayOrder = selectedDisplayOrder === 'mon-sun' ? [0, 1, 2, 3, 4, 5, 6] : [6, 0, 1, 2, 3, 4, 5];
         const displayMode = document.querySelector('input[name="tab4DisplayMode"]:checked')?.value || 'number';
-
-        const weeklyScheduleHtml = displayOrder.map(j => {
-            const combo = option.type === 'uniform' ? option.combo : option.comboWeekly[j];
-            let dayType = 'normal';
-            if (option.type === 'non-uniform') {
-                if (option.stopDays.includes(j)) dayType = 'stop';
-                else if (option.specialDays.includes(j)) dayType = 'special';
-            }
-            return renderTab4Day(j, combo, dayType, displayMode);
-        }).join('');
-
         const totalPillsHeader = isAppointmentCalculation ? `รวมยาถึงวันนัด (${daysUntilAppointment} วัน):` : 'รวมยาสำหรับ 1 สัปดาห์:';
         const pillsNeededMessage = calculateTab4TotalPills(option, daysUntilAppointment, startDate);
+        const appointmentHeaderLabel = isAppointmentCalculation ? `${daysUntilAppointment} วันนัด` : '1 สัปดาห์';
+        
+        if (displayMode === 'image') {
+            const displayOrder = [0, 1, 2, 3, 4, 5, 6]; // Monday to Sunday (เริ่มจากวันจันทร์เสมอ)
+            const weeklyScheduleHtml = displayOrder.map(j => {
+                const combo = option.type === 'uniform' ? option.combo : option.comboWeekly[j];
+                let dayType = 'normal';
+                if (option.type === 'non-uniform') {
+                    if (option.stopDays.includes(j)) dayType = 'stop';
+                    else if (option.specialDays.includes(j)) dayType = 'special';
+                }
+                return renderTab4Day(j, combo, dayType, displayMode);
+            }).join('');
 
-        return `
-            <div class="card" style="border-top: 4px solid var(--accent); padding: 15px; margin-top: 15px;">
-                <div style="font-weight: 600; color: var(--accent); margin-bottom: 8px;">ตัวเลือก ${index + 1}: ${description} (รวม ${option.weeklyDoseActual.toFixed(1)} mg/สัปดาห์)</div>
-                <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 10px; text-align: center;">
-                    ${weeklyScheduleHtml}
-                </div>
-                <div style="margin-top: 15px; padding-top: 10px; border-top: 1.5px solid #eee; font-size: 13.5px; color: #374151;">
-                    <span style="font-weight: bold;">${totalPillsHeader}</span><br>
-                    ${pillsNeededMessage}
-                </div>
-            </div>`;
+            return `
+                <div class="card" style="border: 1.5px solid #b2dfdb; border-left: 5px solid #00a896; border-radius: 16px; background-color: #f7fdfd; box-shadow: 0 4px 10px rgba(0,168,150,0.05); padding: 18px; margin-bottom: 20px;">
+                    <!-- Header summary block matches image_b9e145.png -->
+                    <div style="margin: 0 0 16px 0; font-size: 13.5px; color: #004d40; font-weight: bold; background: #e0f2f1; padding: 10px 14px; border-radius: 8px; display: flex; align-items: center; gap: 8px;">
+                        <span>📝 สรุปแผนการกิน: ${getTab4FriendlySummary(dailyPills3, dailyPills2)}</span>
+                    </div>
+                    
+                    <!-- 7 Days Grid -->
+                    <div class="plan-grid" style="display: flex; gap: 8px; justify-content: space-between; overflow-x: auto; padding-bottom: 8px; margin-bottom: 16px;">
+                        ${weeklyScheduleHtml}
+                    </div>
+                    
+                    <!-- Footer details matches image_b9e145.png -->
+                    <div style="margin-top: 15px; padding-top: 12px; border-top: 1px dashed #b2dfdb; font-size: 13.5px; color: #374151; display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:12px;">
+                        <div>
+                            <div style="font-weight: bold; margin-bottom: 8px; color: #004d40; font-size: 14px;">${totalPillsHeader}</div>
+                            <div style="display: flex; flex-direction: column; gap: 6px;">
+                                ${pillsNeededMessage}
+                            </div>
+                        </div>
+                        <div>
+                            <button onclick="window.print()" class="primary" style="font-family: 'Kanit', sans-serif; font-size: 14px; font-weight: 600; padding: 10px 20px; border-radius: 10px; background-color: #00a896; color: white; border: none; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 6px rgba(0, 168, 150, 0.15);"><i class="fa-solid fa-print mr-1.5"></i>พิมพ์แผนยานี้</button>
+                        </div>
+                    </div>
+                </div>`;
+        } else {
+            // MATCH EXACTLY image_af60fd.png (ตัวเลือกตารางแบบตัวเลข)
+            let rowsHtml = '';
+            
+            const uses3mg = dailyPills3.some(p => p > 0);
+            if (uses3mg) {
+                rowsHtml += `<tr style="border-bottom: 1px solid #c8ebd3;">
+                    <td style="padding: 10px 8px; font-weight: bold; font-size: 13.5px; text-align: left; background: #fafdfb; border-right: 1px solid #c8ebd3; color: #1b5e20;">3 mg (เม็ด)</td>`;
+                for (let i = 0; i < 7; i++) {
+                    const val = dailyPills3[i];
+                    rowsHtml += `<td style="padding: 10px 8px; font-size: 14px; color: #263238; border-right: 1px solid #c8ebd3;">${val === 0 ? '' : (val % 1 === 0 ? val : val.toFixed(1))}</td>`;
+                }
+                rowsHtml += `</tr>`;
+            }
+
+            const uses2mg = dailyPills2.some(p => p > 0);
+            if (uses2mg) {
+                rowsHtml += `<tr style="border-bottom: 1px solid #c8ebd3;">
+                    <td style="padding: 10px 8px; font-weight: bold; font-size: 13.5px; text-align: left; background: #fafdfb; border-right: 1px solid #c8ebd3; color: #1b5e20;">2 mg (เม็ด)</td>`;
+                for (let i = 0; i < 7; i++) {
+                    const val = dailyPills2[i];
+                    rowsHtml += `<td style="padding: 10px 8px; font-size: 14px; color: #263238; border-right: 1px solid #c8ebd3;">${val === 0 ? '' : (val % 1 === 0 ? val : val.toFixed(1))}</td>`;
+                }
+                rowsHtml += `</tr>`;
+            }
+
+            rowsHtml += `<tr style="font-weight: bold; background: #f4faf6; color: #1b5e20;">
+                <td style="padding: 10px 8px; font-weight: bold; font-size: 13.5px; text-align: left; border-right: 1px solid #c8ebd3;">รวม (mg)</td>`;
+            for (let i = 0; i < 7; i++) {
+                const val = dailyDoses[i];
+                rowsHtml += `<td style="padding: 10px 8px; font-size: 14px; border-right: 1px solid #c8ebd3;">${val === 0 ? '' : val.toFixed(2)}</td>`;
+            }
+            rowsHtml += `</tr>`;
+
+            let dispenseParts = [];
+            [3, 2].forEach(mg => {
+                let totalPills = 0;
+                const today = new Date();
+                const startJsDayIndex = startDate ? startDate.getDay() : 1; 
+                const dailyPills = mg === 3 ? dailyPills3 : dailyPills2;
+
+                for (let d = 0; d < daysUntilAppointment; d++) {
+                    const currentDayIndex = getTab4ThaiDayIndex((startJsDayIndex + d) % 7);
+                    totalPills += dailyPills[currentDayIndex];
+                }
+                
+                const totalTablets = Math.ceil(totalPills);
+                if (totalTablets > 0) {
+                    dispenseParts.push(`รวม ${mg} mg: ${totalTablets} เม็ด`);
+                }
+            });
+            const dispenseSummaryText = dispenseParts.join(' | ') || 'ไม่ต้องจ่ายยา';
+
+            return `
+                <div style="border: 1.5px solid #a5d6a7; border-left: 5px solid #4caf50; border-radius: 12px; background: #fafdfb; padding: 16px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); text-align: left;">
+                    <div style="font-weight: bold; color: #2e7d32; font-size: 14.5px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                        <span>📝 สรุปแผนการกิน:</span>
+                        <span style="font-weight: 500; color: #374151;">${getTab4FriendlySummary(dailyPills3, dailyPills2)}</span>
+                    </div>
+                    
+                    <div style="overflow-x: auto; margin-bottom: 15px;">
+                        <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; border: 1px solid #c8ebd3; text-align: center;">
+                            <thead>
+                                <tr style="background: #e8f5e9; color: #1b5e20;">
+                                    <th style="padding: 10px 8px; font-weight: bold; border-bottom: 1.5px solid #c8ebd3; border-right: 1px solid #c8ebd3; font-size: 13.5px; text-align: left; width: 120px;">ชนิดยา</th>
+                                    <th style="padding: 10px 8px; font-weight: bold; border-bottom: 1.5px solid #c8ebd3; border-right: 1px solid #c8ebd3; font-size: 13.5px;">จันทร์</th>
+                                    <th style="padding: 10px 8px; font-weight: bold; border-bottom: 1.5px solid #c8ebd3; border-right: 1px solid #c8ebd3; font-size: 13.5px;">อังคาร</th>
+                                    <th style="padding: 10px 8px; font-weight: bold; border-bottom: 1.5px solid #c8ebd3; border-right: 1px solid #c8ebd3; font-size: 13.5px;">พุธ</th>
+                                    <th style="padding: 10px 8px; font-weight: bold; border-bottom: 1.5px solid #c8ebd3; border-right: 1px solid #c8ebd3; font-size: 13.5px;">พฤหัส</th>
+                                    <th style="padding: 10px 8px; font-weight: bold; border-bottom: 1.5px solid #c8ebd3; border-right: 1px solid #c8ebd3; font-size: 13.5px;">ศุกร์</th>
+                                    <th style="padding: 10px 8px; font-weight: bold; border-bottom: 1.5px solid #c8ebd3; border-right: 1px solid #c8ebd3; font-size: 13.5px;">เสาร์</th>
+                                    <th style="padding: 10px 8px; font-weight: bold; border-bottom: 1.5px solid #c8ebd3; font-size: 13.5px;">อาทิตย์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${rowsHtml}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div style="background: #e8f5e9; border: 1px solid #c8ebd3; border-radius: 8px; padding: 12px 15px; color: #1b5e20; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                        <div>
+                            <div style="font-weight: bold; font-size: 14px; margin-bottom: 6px;">สรุปจำนวนเม็ดยา (${appointmentHeaderLabel})</div>
+                            <div style="font-size: 13.5px; font-weight: 600;">
+                                ${dispenseSummaryText}
+                            </div>
+                        </div>
+                        <div>
+                            <button onclick="window.print()" class="primary" style="font-family: 'Kanit', sans-serif; font-size: 14px; font-weight: 600; padding: 10px 20px; border-radius: 10px; background-color: #2e7d32; color: white; border: none; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 6px rgba(46, 125, 50, 0.15);"><i class="fa-solid fa-print mr-1.5"></i>พิมพ์แผนยานี้</button>
+                        </div>
+                    </div>
+                </div>`;
+        }
     }
 
     function renderTab4Day(idx, combo, dayType, displayMode) {
-        const dayColors = ['#FFECC6', '#FDE8F1', '#E6F7E6', '#FEEED7', '#E1F1FD', '#E6E1F4', '#FCE6E6'];
+        const dayLabelName = tab4DaysFullName[idx]; 
+        const shortLabel = tab4DaysName[idx]; 
+        
+        const headerCapsules = {
+            'จันทร์': 'border: 1.5px solid #FFC107; background-color: #FFECC6; color: #333;',
+            'อังคาร': 'border: 1.5px solid #9c27b0; background-color: #f3e5f5; color: #4a148c;',
+            'พุธ': 'border: 1.5px solid #4CAF50; background-color: #E6F7E6; color: #1B5E20;',
+            'พฤหัสบดี': 'border: 1.5px solid #FF9800; background-color: #FEEED7; color: #E65100;',
+            'ศุกร์': 'border: 1.5px solid #2196F3; background-color: #E1F1FD; color: #0D47A1;',
+            'เสาร์': 'border: 1.5px solid #E91E63; background-color: #FDE8F1; color: #880E4F;',
+            'อาทิตย์': 'border: 1.5px solid #F44336; background-color: #FCE6E6; color: #B71C1C;'
+        };
+        const activeCapsuleStyle = headerCapsules[dayLabelName] || 'border: 1px solid #D1D5DB; background-color: #f3f4f6; color: #333;';
+        
         let dMg = 0;
-        let pillRow = '';
-        let pillTxt = [];
+        let pillGraphicHtml = '';
+        let pillDoseLabel = '';
         
         if (combo && combo.length > 0) {
             combo.forEach(p => {
                 dMg += p.half ? p.mg * 0.5 * p.count : p.mg * p.count;
+                
+                const fillClr = p.mg === 3 ? '#4FC3F7' : '#FFB74D';
+                const strokeClr = p.mg === 3 ? '#0288D1' : '#F57C00';
+                
                 if (displayMode === 'image') {
-                    let styleClass = `tab4-pill tab4-pill-${p.mg} ${p.half ? 'tab4-pill-half-left' : ''}`;
-                    for (let k = 0; k < p.count; k++) {
-                        pillRow += `<span class="${styleClass}"></span>`;
+                    if (p.half) {
+                        pillGraphicHtml += `
+                        <svg width="24" height="24" viewBox="0 0 100 100" style="margin: 4px auto; display: inline-block;">
+                            <path d="M 50,15 A 35,35 0 0,0 50,85 Z" fill="${fillClr}" stroke="${strokeClr}" stroke-width="8" />
+                            <line x1="50" y1="15" x2="50" y2="85" stroke="${strokeClr}" stroke-width="5" stroke-dasharray="6,6" />
+                        </svg>`;
+                        pillDoseLabel = `${p.mg} mg x 0.5`;
+                    } else {
+                        pillGraphicHtml += `
+                        <svg width="24" height="24" viewBox="0 0 100 100" style="margin: 4px auto; display: inline-block;">
+                            <circle cx="50" cy="50" r="35" fill="${fillClr}" stroke="${strokeClr}" stroke-width="8" />
+                            <line x1="50" y1="15" x2="50" y2="85" stroke="${strokeClr}" stroke-width="5" />
+                        </svg>`;
+                        pillDoseLabel = `${p.mg} mg x ${p.count}`;
                     }
                 }
-                pillTxt.push(`${p.mg} mg ${p.half ? 'x(ครึ่ง)' : 'x' + p.count}`);
             });
         }
 
         let dayContentHtml;
-        let borderStyle = "border: 1px solid #ddd; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; background: #fff;";
+        const mainCardOuterStyle = "background: #ffffff; border: 1px solid #e0e0e0; border-radius: 16px; padding: 12px 6px; min-width: 110px; flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center;";
 
         if (dayType === 'stop' || dMg < TAB4_FLOAT_TOLERANCE) {
             dayContentHtml = `
-                <div style="font-size: 13px; color: #263238;">(0.0 mg)</div>
-                <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 4px 0; min-height: 24px;">
-                    <div style="font-size: 11px; color: #78909c; font-weight: bold;">หยุดยา</div>
+                <div style="${activeCapsuleStyle} border-radius: 8px; width: 100%; text-align: center; font-weight: bold; font-size: 13px; padding: 4px 0;">${shortLabel === 'พฤ.' ? 'พฤหัส' : dayLabelName.replace('วัน','')}</div>
+                <div style="font-size: 12px; color: #9CA3AF; font-weight: bold; margin-top: 6px;">(0.0 mg)</div>
+                <div style="margin: 8px 0; height: 32px; display: flex; align-items: center; justify-content: center;">
+                    <svg width="24" height="24" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="35" fill="none" stroke="#cfd8dc" stroke-width="8" stroke-dasharray="8,8" />
+                        <line x1="25" y1="25" x2="75" y2="75" stroke="#cfd8dc" stroke-width="8" />
+                    </svg>
                 </div>
+                <div style="font-size: 11px; color: #9ca3af; font-weight: 500;">หยุดกินยา</div>
             `;
         } else {
-            const textPillsHtml = pillTxt.map(t => `<div style="font-size: 11px; color: #374151; margin-top: 2px;">${t}</div>`).join('');
-            if (dayType === 'special') {
-                borderStyle = "border: 2px solid red; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; background: #fff;";
-            }
-            const pillsVisualHtml = displayMode === 'image' && pillRow ? `<div style="margin:4px 0;">${pillRow}</div>` : '';
             dayContentHtml = `
-                <div style="font-size: 13px; color: #263238; font-weight: bold;">(${dMg.toFixed(1)} mg)</div>
-                <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 4px 0; min-height: 24px;">
-                    ${pillsVisualHtml}
+                <div style="${activeCapsuleStyle} border-radius: 8px; width: 100%; text-align: center; font-weight: bold; font-size: 13px; padding: 4px 0;">${shortLabel === 'พฤ.' ? 'พฤหัส' : dayLabelName.replace('วัน','')}</div>
+                <div style="font-size: 12px; color: #388E3C; font-weight: bold; margin-top: 6px;">(${dMg.toFixed(1)} mg)</div>
+                <div style="margin: 8px 0; height: 32px; display: flex; align-items: center; justify-content: center;">
+                    ${pillGraphicHtml}
                 </div>
-                <div>${textPillsHtml}</div>
+                <div style="font-size: 11px; color: #5a6a70; font-weight: 500;">${pillDoseLabel}</div>
             `;
         }
 
-        return `
-            <div style="${borderStyle}">
-                <div style="background: ${dayColors[idx]}; font-weight: bold; color: #263238; padding: 4px 0; font-size: 12.5px;">${tab4DaysName[idx]}</div>
-                <div style="padding: 6px; flex-grow: 1; display: flex; flex-direction: column;">
-                    ${dayContentHtml}
-                </div>
-            </div>`;
+        return `<div style="${mainCardOuterStyle}">${dayContentHtml}</div>`;
     }
 
     function findTab4Comb(target, availablePills, allowHalf, minPillObjects, maxPillObjects) {
@@ -2592,8 +2814,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function calculateTab4TotalPills(option, daysUntilAppointment, startDate) {
-        let halfPillCounts = { 1: 0, 2: 0, 3: 0, 5: 0 };
-        let wholePillCounts = { 1: 0, 2: 0, 3: 0, 5: 0 };
+        let halfPillCounts = { 2: 0, 3: 0 };
+        let wholePillCounts = { 2: 0, 3: 0 };
         const startJsDayIndex = startDate ? startDate.getDay() : 1; 
 
         for (let day = 0; day < daysUntilAppointment; day++) {
@@ -2608,24 +2830,37 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         let message = '';
-        [5, 3, 2, 1].forEach(mg => {
+        const listItems = [];
+        [3, 2].forEach(mg => {
             const wholePills = wholePillCounts[mg] + Math.floor(halfPillCounts[mg] / 2);
             const remainingHalves = halfPillCounts[mg] % 2;
             const dispensedPills = wholePills + remainingHalves;
             if (dispensedPills > 0) {
-                const actualUsed = wholePills + remainingHalves * 0.5;
-                message += `<span class="tab4-pill tab4-pill-${mg}"></span> ${mg} mg: <strong>${dispensedPills} เม็ด</strong>`;
-                if (remainingHalves > 0) message += ` (ใช้จริง ${actualUsed.toFixed(1)} เม็ด)`;
-                message += `<br>`;
+                const colorHex = mg === 3 ? '#0288D1' : '#F57C00';
+                listItems.push(`
+                    <div style="display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 13.5px; color: #374151;">
+                        <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background-color: ${colorHex};"></span>
+                        <span>${mg} mg: ${dispensedPills} เม็ด</span>
+                    </div>
+                `);
             }
         });
-        return message || '<span>ไม่ต้องจ่ายยา</span>';
+        return listItems.join('') || '<div style="color: #9CA3AF;">ไม่ต้องจ่ายยา</div>';
     }
 
     function getTab4AppointmentInfo() {
         let daysUntilAppointment = 7;
         let isAppointmentCalculation = false;
         let startDate = null;
+        
+        const tab4DaysInputVal = parseInt(document.getElementById('tab4Days').value);
+        if (!isNaN(tab4DaysInputVal) && tab4DaysInputVal > 0) {
+            daysUntilAppointment = tab4DaysInputVal;
+            isAppointmentCalculation = true;
+        } else {
+            daysUntilAppointment = 7;
+            isAppointmentCalculation = false;
+        }
         
         if (tab4AppointmentToggle.checked) {
             const startVal = tab4StartDate.value;
@@ -2649,11 +2884,14 @@ document.addEventListener('DOMContentLoaded', function() {
       function updateTab4AppointmentDaysDisplay() {
           const { daysUntilAppointment, isAppointmentCalculation } = getTab4AppointmentInfo();
           if (isAppointmentCalculation) {
-               tab4DaysResult.textContent = `คำนวณสำหรับ ${daysUntilAppointment} วัน`;
+               tab4DaysResult.textContent = "คำนวณสำหรับ " + daysUntilAppointment + " วัน";
           } else {
                tab4DaysResult.textContent = '';
           }
-          generateTab4Suggestions(); // ทำการคำนวณใหม่แบบเรียลไทม์เมื่อเปลี่ยนวันนัด
+
+          if (tab4Result.innerHTML.trim() !== '') {
+              generateTab4Suggestions();
+          }
       }
 
       // ==========================================
@@ -2665,14 +2903,10 @@ document.addEventListener('DOMContentLoaded', function() {
           tab4PreviousDose.value = '';
           tab4WeeklyDose.value = '';
           tab4AllowHalf.checked = true;
+          document.getElementById('tab4Days').value = '';
           
-          document.getElementById('tab4-pill-1').checked = false;
           document.getElementById('tab4-pill-2').checked = true;
           document.getElementById('tab4-pill-3').checked = true;
-          document.getElementById('tab4-pill-5').checked = true;
-          
-          document.getElementById('tab4PatternFriSun').checked = true;
-          document.getElementById('tab4DisplaySunSat').checked = true;
           
           const firstDisplayMode = document.querySelector('input[name="tab4DisplayMode"][value="number"]');
           if (firstDisplayMode) firstDisplayMode.checked = true;
@@ -2688,15 +2922,19 @@ document.addEventListener('DOMContentLoaded', function() {
           tab4AdjustmentTable.innerHTML = '';
       });
 
+      // ดักจับการแก้ไขขนาดยาเพื่อเปลี่ยนวิธีกินยาอัตโนมัติทันทีโดยไม่ต้องคลิกปุ่ม
       tab4PreviousDose.addEventListener('input', () => {
           generateTab4DoseAdjustmentTable();
           displayTab4PercentageChange();
-          generateTab4Suggestions(); // Auto-calculate เมื่อพิมพ์ขนาดยาเดิม
+          if (tab4WeeklyDose.value) {
+              generateTab4Suggestions();
+          }
       });
       tab4WeeklyDose.addEventListener('input', () => {
           displayTab4PercentageChange();
-          generateTab4Suggestions(); // Auto-calculate เมื่อพิมพ์ขนาดยาใหม่
+          generateTab4Suggestions();
       });
+      document.getElementById('tab4Days').addEventListener('input', handleTab4OptionChange);
       
       tab4AppointmentToggle.addEventListener('change', () => {
           if (tab4AppointmentToggle.checked) {
@@ -2706,7 +2944,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   const yyyy = today.getFullYear();
                   const mm = String(today.getMonth() + 1).padStart(2, '0');
                   const dd = String(today.getDate()).padStart(2, '0');
-                  tab4StartDate.value = `${yyyy}-${mm}-${dd}`;
+                  tab4StartDate.value = yyyy + "-" + mm + "-" + dd;
               }
           } else {
               tab4AppointmentFields.style.display = 'none';
@@ -2718,13 +2956,10 @@ document.addEventListener('DOMContentLoaded', function() {
       tab4EndDate.addEventListener('change', updateTab4AppointmentDaysDisplay);
 
       function handleTab4OptionChange() {
-          generateTab4Suggestions(); // รันการคำนวณทันทีที่ตัวเลือกยิบย่อยเปลี่ยน (ไม่รอให้มีข้อมูลเก่าค้าง)
+          if (tab4WeeklyDose.value) {
+              generateTab4Suggestions();
+          }
       }
-
-      document.getElementById('tab4PatternFriSun').addEventListener('change', handleTab4OptionChange);
-      document.getElementById('tab4PatternMonWedFri').addEventListener('change', handleTab4OptionChange);
-      document.getElementById('tab4DisplaySunSat').addEventListener('change', handleTab4OptionChange);
-      document.getElementById('tab4DisplayMonSun').addEventListener('change', handleTab4OptionChange);
       
       document.querySelectorAll('input[name="tab4DisplayMode"]').forEach(el => el.addEventListener('change', handleTab4OptionChange));
 
@@ -2935,7 +3170,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const badge = document.getElementById('manualComparisonBadge');
             if (badge) {
-                badge.innerHTML = `ขนาดยาเป้าหมาย: - | เปลี่ยนแปลง: -`;
+                badge.innerHTML = "ขนาดยาเป้าหมาย: - | เปลี่ยนแปลง: -";
             }
 
             document.querySelectorAll('.tab2-table .guideline-highlight-cell').forEach(el => {
@@ -3087,7 +3322,7 @@ function updateManualGuideline() {
 
     const formatPct = (val) => {
         const sign = val >= 0 ? '+' : '';
-        return `${sign}${(val * 100).toFixed(1)}%`;
+        return sign + (val * 100).toFixed(1) + "%";
     };
 
     const minPctStr = formatPct(adj.minPct);
@@ -3100,11 +3335,11 @@ function updateManualGuideline() {
             <strong>คำแนะนำ:</strong> INR = ${inr.toFixed(2)} <span style="color:#E53935;font-weight:700;">➜</span> ${adj.note}
         </p>
         <p style="margin: 0 0 6px 0; font-size: 15px; color: #263238; line-height: 1.5;">
-            ขนาดยาใหม่ต่อสัปดาห์ (mg) : <strong style="font-weight:600; font-size: 15.5px;">${minDose.toFixed(2)} — ${maxDose.toFixed(2)}</strong> 
+            ขนาดยาใหม่ต่อสัปดาห์ (mg) : <strong style="font-weight:600; font-size: 15.5px;">` + minDose.toFixed(2) + ` — ` + maxDose.toFixed(2) + `</strong> 
             <strong style="color: ${pctColor}; font-weight:600; font-size: 15.5px;">( ${minPctStr} — ${maxPctStr} )</strong>
         </p>
         <p style="margin: 0; font-size: 15px; color: #263238; line-height: 1.5;">
-            ( เฉลี่ย ${avgDose.toFixed(2)} mg / <strong style="color: ${pctColor}; font-weight:600;">${avgPctStr}</strong> )
+            ( เฉลี่ย ` + avgDose.toFixed(2) + ` mg / <strong style="color: ${pctColor}; font-weight:600;">${avgPctStr}</strong> )
         </p>
     `;
     card.style.display = 'block';
