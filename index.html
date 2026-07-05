@@ -1,4 +1,3 @@
-
 <html lang="th">
 <head>
 <meta charset="utf-8" />
@@ -620,7 +619,7 @@
         <button class="tab-btn active" onclick="switchTab('tab-guideline')">📋 ปรับยาตามแนวทาง (INR Guideline)</button>
         <button class="tab-btn" onclick="switchTab('tab-manual')">⚙️ ปรับขนาดยาด้วยตนเอง (Manual Dose Planner)</button>
         <button class="tab-btn" onclick="switchTab('tab-standalone')">🧮 คำนวณกลับจากจำนวนเม็ด</button>
-        <button class="tab-btn" onclick="switchTab('tab-quick')">⚡ Warfarin คิดแป๊ปเดียว !</button>
+        <button class="tab-btn" onclick="switchTab('tab-quick')">⚡ Warfarin รูปแบบต่างๆ !</button>
     </div>
 
     <!-- ========================================== -->
@@ -2307,6 +2306,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function getTab4FriendlySummary(pills3, pills2) {
         const p3Groups = {};
         const p2Groups = {};
+        let holdDaysCount = 0;
         
         for (let i = 0; i < 7; i++) {
             if (pills3[i] > 0) {
@@ -2314,6 +2314,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             if (pills2[i] > 0) {
                 p2Groups[pills2[i]] = (p2Groups[pills2[i]] || 0) + 1;
+            }
+            if (pills3[i] === 0 && pills2[i] === 0) {
+                holdDaysCount++;
             }
         }
         
@@ -2329,6 +2332,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const qtyText = parseFloat(qty) === 0.5 ? "0.5 เม็ด" : `${qty} เม็ด`;
             summaryParts.push(`Warfarin 2 mg ขนาด ${qtyText} จำนวน ${daysCount} วัน`);
         });
+
+        if (holdDaysCount > 0) {
+            summaryParts.push(`หยุดยา ${holdDaysCount} วัน`);
+        }
         
         return summaryParts.join(' | ') || 'หยุดยา';
     }
@@ -2476,6 +2483,37 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // คำนวณจำนวนเม็ด 3mg/2mg รายวัน (7 วัน) จาก option โดยไม่สนใจว่าเป็นวันหยุดยาหรือไม่
+    function getTab4OptionDailyPills(option) {
+        const dailyPills3 = Array(7).fill(0);
+        const dailyPills2 = Array(7).fill(0);
+        for (let i = 0; i < 7; i++) {
+            const combo = option.type === 'uniform' ? option.combo : option.comboWeekly[i];
+            if (combo) {
+                combo.forEach(p => {
+                    const val = p.half ? 0.5 * p.count : p.count;
+                    if (p.mg === 3) dailyPills3[i] += val;
+                    if (p.mg === 2) dailyPills2[i] += val;
+                });
+            }
+        }
+        return { dailyPills3, dailyPills2 };
+    }
+
+    // สร้างคีย์เปรียบเทียบ "เนื้อหาการใช้ยาจริง" (จำนวนวัน x ขนาดยาแต่ละชนิด) โดยไม่นับวันหยุดยาและไม่สนใจว่าอยู่วันไหน
+    // เพื่อให้แผนที่ใช้จำนวนเม็ดต่อขนาดเท่ากันทุกประการ (ต่างกันแค่มีวันหยุดยาแทรกหรือไม่) ถูกยุบเหลือแผนเดียว
+    function getTab4PracticalKey(pills3, pills2) {
+        const p3Groups = {};
+        const p2Groups = {};
+        for (let i = 0; i < 7; i++) {
+            if (pills3[i] > 0) p3Groups[pills3[i]] = (p3Groups[pills3[i]] || 0) + 1;
+            if (pills2[i] > 0) p2Groups[pills2[i]] = (p2Groups[pills2[i]] || 0) + 1;
+        }
+        const p3Key = Object.keys(p3Groups).sort((a, b) => b - a).map(q => `${q}x${p3Groups[q]}`).join(',');
+        const p2Key = Object.keys(p2Groups).sort((a, b) => b - a).map(q => `${q}x${p2Groups[q]}`).join(',');
+        return `3[${p3Key}]2[${p2Key}]`;
+    }
+
     function sortAndRenderTab4Options(options, daysUntilAppointment, isAppointmentCalculation, startDate) {
          if (options.length === 0) {
              tab4Result.innerHTML = '<div style="color: red; text-align: center; font-weight: bold; margin-top: 15px;">ไม่พบตัวเลือกที่เหมาะสมสำหรับขนาดยาที่ต้องการ</div>';
@@ -2499,7 +2537,19 @@ document.addEventListener('DOMContentLoaded', function() {
             return 0;
         });
 
-        tab4Result.innerHTML = options.slice(0, 30).map((option, index) => {
+        // ยุบแผนที่ใช้จำนวนเม็ดต่อขนาดเท่ากันทุกประการให้เหลือแผนเดียว (เก็บแผนที่เรียงมาก่อน = ซับซ้อนน้อยที่สุด)
+        const seenPracticalKeys = new Set();
+        const dedupedOptions = [];
+        options.forEach(option => {
+            const { dailyPills3, dailyPills2 } = getTab4OptionDailyPills(option);
+            const practicalKey = getTab4PracticalKey(dailyPills3, dailyPills2);
+            if (!seenPracticalKeys.has(practicalKey)) {
+                seenPracticalKeys.add(practicalKey);
+                dedupedOptions.push(option);
+            }
+        });
+
+        tab4Result.innerHTML = dedupedOptions.slice(0, 30).map((option, index) => {
             return renderTab4Option(option, index, daysUntilAppointment, isAppointmentCalculation, startDate);
         }).join('');
     }
